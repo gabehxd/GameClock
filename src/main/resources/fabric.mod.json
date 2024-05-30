@@ -24,5 +24,8 @@
     "fabric": "*",
     "minecraft": "${minecraft_version}",
     "yet_another_config_lib_v3": "*"
+  },
+  "recommends": {
+    "modmenu": ">=10.0.0-beta.1"
   }
 }

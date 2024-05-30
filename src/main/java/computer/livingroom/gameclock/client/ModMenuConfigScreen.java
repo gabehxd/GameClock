@@ -18,7 +18,6 @@ import static computer.livingroom.gameclock.client.Config.HANDLER;
 public class ModMenuConfigScreen implements ModMenuApi {
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
-
         return parent -> YetAnotherConfigLib.createBuilder()
                 .title(Text.literal("Game Clock"))
                 .category(ConfigCategory.createBuilder()
@@ -38,12 +37,12 @@ public class ModMenuConfigScreen implements ModMenuApi {
                                                 .formatValue(v -> Text.literal(v.name().charAt(0) + v.name().substring(1).toLowerCase().replace('_', ' '))))
                                         .build())
                                 .option(Option.<Integer>createBuilder()
-                                        .name(Text.literal("Y Padding"))
+                                        .name(Text.literal("X Padding"))
                                         .description(OptionDescription.of(Text.of("Add some pixel space in between the edge of the screen and the text.")))
                                         .binding(
                                                 5,
-                                                () -> HANDLER.instance().yPadding,
-                                                integer -> HANDLER.instance().yPadding = integer
+                                                () -> HANDLER.instance().xPadding,
+                                                integer -> HANDLER.instance().xPadding = integer
                                         )
                                         .controller(integerOption -> IntegerSliderControllerBuilder.create(integerOption)
                                                 .range(0, 25)
@@ -51,12 +50,12 @@ public class ModMenuConfigScreen implements ModMenuApi {
                                                 .formatValue(value -> Text.of(value + " px")))
                                         .build())
                                 .option(Option.<Integer>createBuilder()
-                                        .name(Text.literal("X Padding"))
+                                        .name(Text.literal("Y Padding"))
                                         .description(OptionDescription.of(Text.of("Add some pixel space in between the edge of the screen and the text.")))
                                         .binding(
-                                                8,
-                                                () -> HANDLER.instance().xPadding,
-                                                integer -> HANDLER.instance().xPadding = integer
+                                                5,
+                                                () -> HANDLER.instance().yPadding,
+                                                integer -> HANDLER.instance().yPadding = integer
                                         )
                                         .controller(integerOption -> IntegerSliderControllerBuilder.create(integerOption)
                                                 .range(0, 25)
@@ -76,6 +75,17 @@ public class ModMenuConfigScreen implements ModMenuApi {
                                         )
                                         .controller(opt -> ColorControllerBuilder.create(opt)
                                                 .allowAlpha(true))
+                                        .build())
+                                .option(Option.<Boolean>createBuilder()
+                                        .name(Text.literal("Text Shadow"))
+                                        .description(OptionDescription.of(Text.literal("Adds a shadow to the text.")))
+                                        .binding(
+                                                false,
+                                                () -> HANDLER.instance().shadowText,
+                                                shadow -> HANDLER.instance().shadowText = shadow
+                                        )
+                                        .controller(opt -> BooleanControllerBuilder.create(opt)
+                                                .coloured(true))
                                         .build())
                                 .option(Option.<Boolean>createBuilder()
                                         .name(Text.of("24-Hour Clock"))

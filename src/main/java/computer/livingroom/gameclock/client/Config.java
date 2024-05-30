@@ -23,15 +23,17 @@ public class Config {
 
     @SerialEntry
     public Position guiPosition = Position.BOTTOM_LEFT;
-
+    @SerialEntry
+    public Boolean shadowText = false;
     @SerialEntry
     public Color hexColor = new Color(0xFFFFFFFF, true);
     @SerialEntry
-    public int xPadding = 8;
+    public int xPadding = 5;
     @SerialEntry
     public int yPadding = 5;
     @SerialEntry
     public boolean is24Hour = false;
+    //TODO: box for text
 
     public int getHexColor() {
         //What the fuck java

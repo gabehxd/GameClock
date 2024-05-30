@@ -21,14 +21,12 @@ public class GameClockClient implements ClientModInitializer {
             if (MinecraftClient.getInstance().getDebugHud().shouldShowDebugHud())
                 return;
 
-
             TextRenderer renderer = MinecraftClient.getInstance().textRenderer;
             Config cfg = HANDLER.instance();
             String time = cfg.getTime();
 
             Point point = cfg.getPosition(time, cfg.guiPosition, ctx, renderer);
-            //TODO: Implement shadow options
-            ctx.drawText(renderer, time, point.x, point.y, cfg.getHexColor(), false);
+            ctx.drawText(renderer, time, point.x, point.y, cfg.getHexColor(), cfg.shadowText);
         });
         LOGGER.info("Initialized");
     }
