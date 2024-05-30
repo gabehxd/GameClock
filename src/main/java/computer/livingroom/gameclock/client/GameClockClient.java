@@ -24,12 +24,10 @@ public class GameClockClient implements ClientModInitializer {
             TextRenderer renderer = MinecraftClient.getInstance().textRenderer;
             Config cfg = HANDLER.instance();
             String time = cfg.getTime();
+            Point point = cfg.getPosition(ctx, time, renderer);
 
-            Point point = cfg.getPosition(time, cfg.guiPosition, ctx, renderer);
             ctx.drawText(renderer, time, point.x, point.y, cfg.getHexColor(), cfg.shadowText);
         });
         LOGGER.info("Initialized");
     }
-
-
 }

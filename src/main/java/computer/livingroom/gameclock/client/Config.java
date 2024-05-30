@@ -44,15 +44,15 @@ public class Config {
         return !this.is24Hour ? LocalDateTime.now().format(DateTimeFormatter.ofPattern("hh:mm a")) : LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
     }
 
-    public Point getPosition(String string, Position pos, DrawContext ctx, TextRenderer textRenderer) {
-        return switch (pos) {
+    public Point getPosition( DrawContext ctx, String str, TextRenderer textRenderer) {
+        return switch (this.guiPosition) {
             case TOP_LEFT -> new Point(0 + this.xPadding, 0 + this.yPadding);
             case BOTTOM_LEFT ->
                     new Point(0 + this.xPadding, ctx.getScaledWindowHeight() - textRenderer.fontHeight - this.yPadding);
             case TOP_RIGHT ->
-                    new Point(ctx.getScaledWindowWidth() - textRenderer.getWidth(string) - this.xPadding, 0 + this.yPadding);
+                    new Point(ctx.getScaledWindowWidth() - textRenderer.getWidth(str) - this.xPadding, 0 + this.yPadding);
             case BOTTOM_RIGHT ->
-                    new Point(ctx.getScaledWindowWidth() - textRenderer.getWidth(string) - this.xPadding, ctx.getScaledWindowHeight() - textRenderer.fontHeight - this.yPadding);
+                    new Point(ctx.getScaledWindowWidth() - textRenderer.getWidth(str) - this.xPadding, ctx.getScaledWindowHeight() - textRenderer.fontHeight - this.yPadding);
         };
     }
 
