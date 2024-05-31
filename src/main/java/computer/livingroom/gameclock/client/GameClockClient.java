@@ -2,8 +2,8 @@ package computer.livingroom.gameclock.client;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,16 +17,16 @@ public class GameClockClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         HANDLER.load();
-        HudRenderCallback.EVENT.register((ctx, tickDelta) -> {
-            if (MinecraftClient.getInstance().getDebugHud().shouldShowDebugHud())
+        HudRenderCallback.EVENT.register((graphics, tickDelta) -> {
+            if (Minecraft.getInstance().getDebugOverlay().showDebugScreen())
                 return;
 
-            TextRenderer renderer = MinecraftClient.getInstance().textRenderer;
+            Font font = Minecraft.getInstance().font;
             Config cfg = HANDLER.instance();
             String time = cfg.getTime();
-            Point point = cfg.getPosition(ctx, time, renderer);
+            Point point = cfg.getPosition(graphics, time, font);
 
-            ctx.drawText(renderer, time, point.x, point.y, cfg.getHexColor(), cfg.shadowText);
+            graphics.drawString(font, time, point.x, point.y, cfg.getHexColor(), cfg.shadowText);
         });
         LOGGER.info("Initialized");
     }

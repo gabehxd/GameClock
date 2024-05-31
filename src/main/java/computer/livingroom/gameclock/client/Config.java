@@ -4,17 +4,16 @@ import dev.isxander.yacl3.config.v2.api.ConfigClassHandler;
 import dev.isxander.yacl3.config.v2.api.SerialEntry;
 import dev.isxander.yacl3.config.v2.api.serializer.GsonConfigSerializerBuilder;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.util.Identifier;
-
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.resources.ResourceLocation;
 import java.awt.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Config {
     public static ConfigClassHandler<Config> HANDLER = ConfigClassHandler.createBuilder(Config.class)
-            .id(new Identifier("gameclock", "config"))
+            .id(new ResourceLocation("gameclock", "config"))
             .serializer(config -> GsonConfigSerializerBuilder.create(config)
                     .setPath(FabricLoader.getInstance().getConfigDir().resolve("gameclock.json5"))
                     .setJson5(true)
@@ -43,15 +42,15 @@ public class Config {
         return !this.is24Hour ? LocalDateTime.now().format(DateTimeFormatter.ofPattern("hh:mm a")) : LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
     }
 
-    public Point getPosition( DrawContext ctx, String str, TextRenderer textRenderer) {
+    public Point getPosition(GuiGraphics ctx, String str, Font font) {
         return switch (this.guiPosition) {
             case TOP_LEFT -> new Point(0 + this.xPadding, 0 + this.yPadding);
             case BOTTOM_LEFT ->
-                    new Point(0 + this.xPadding, ctx.getScaledWindowHeight() - textRenderer.fontHeight - this.yPadding);
+                    new Point(0 + this.xPadding, ctx.guiHeight() - font.lineHeight - this.yPadding);
             case TOP_RIGHT ->
-                    new Point(ctx.getScaledWindowWidth() - textRenderer.getWidth(str) - this.xPadding, 0 + this.yPadding);
+                    new Point(ctx.guiWidth() - font.width(str) - this.xPadding, 0 + this.yPadding);
             case BOTTOM_RIGHT ->
-                    new Point(ctx.getScaledWindowWidth() - textRenderer.getWidth(str) - this.xPadding, ctx.getScaledWindowHeight() - textRenderer.fontHeight - this.yPadding);
+                    new Point(ctx.guiWidth() - font.width(str) - this.xPadding, ctx.guiHeight() - font.lineHeight - this.yPadding);
         };
     }
 
