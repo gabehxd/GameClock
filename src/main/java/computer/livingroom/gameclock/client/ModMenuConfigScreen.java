@@ -78,9 +78,9 @@ public class ModMenuConfigScreen implements ModMenuApi {
                                         .build())
                                 .option(Option.<Boolean>createBuilder()
                                         .name(Text.literal("Text Shadow"))
-                                        .description(OptionDescription.of(Text.literal("Adds a shadow to the text.")))
+                                        .description(OptionDescription.of(Text.literal("Add a slight shadow to the text.")))
                                         .binding(
-                                                false,
+                                                true,
                                                 () -> HANDLER.instance().shadowText,
                                                 shadow -> HANDLER.instance().shadowText = shadow
                                         )
@@ -89,7 +89,7 @@ public class ModMenuConfigScreen implements ModMenuApi {
                                         .build())
                                 .option(Option.<Boolean>createBuilder()
                                         .name(Text.of("24-Hour Clock"))
-                                        .description(OptionDescription.of(Text.of("Toggle between using 24-hour or a 12-hour clock")))
+                                        .description(OptionDescription.of(Text.of("Toggle between using a 24-hour or a 12-hour clock")))
                                         .binding(
                                                 false,
                                                 () -> HANDLER.instance().is24Hour,
