@@ -18,10 +18,11 @@ public class GameClockClient implements ClientModInitializer {
     public void onInitializeClient() {
         HANDLER.load();
         HudRenderCallback.EVENT.register((graphics, tickDelta) -> {
-            if (Minecraft.getInstance().getDebugOverlay().showDebugScreen())
+            Minecraft minecraft = Minecraft.getInstance();
+            if (minecraft.getDebugOverlay().showDebugScreen() || minecraft.options.hideGui)
                 return;
 
-            Font font = Minecraft.getInstance().font;
+            Font font = minecraft.font;
             Config cfg = HANDLER.instance();
             String time = cfg.getTime();
             Point point = cfg.getPosition(graphics, time, font);
