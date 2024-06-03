@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "gameclock",
+  "version": "${version}",
+  "name": "GameClock",
+  "description": "No bullshit & no mess. Just write a fucking timestamp to the HUD.",
+  "authors": [
+    "gabeh"
+  ],
+  "contact": {
+    "repo": "https://github.com/gabehxd/GameClock"
+  },
+  "license": "MIT",
+  "icon": "assets/gameclock/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "computer.livingroom.gameclock.fabric.client.GameClockClient"
+    ],
+    "modmenu": [
+      "computer.livingroom.gameclock.fabric.client.ModMenuConfigScreen"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.15.11",
+    "minecraft": "~1.20.6",
+    "java": ">=21",
+    "architectury": ">=12.1.2",
+    "fabric-api": "*",
+    "yet_another_config_lib_v3": "*"
+  },
+  "recommends": {
+    "modmenu": ">=10.0.0-beta.1"
+  }
+}

@@ -1,7 +1,6 @@
-package computer.livingroom.gameclock.client;
+package computer.livingroom.gameclock;
 
-import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import dev.architectury.event.events.client.ClientGuiEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import org.slf4j.Logger;
@@ -9,15 +8,16 @@ import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 
-import static computer.livingroom.gameclock.client.Config.HANDLER;
+import static computer.livingroom.gameclock.Config.HANDLER;
 
-public class GameClockClient implements ClientModInitializer {
+public final class GameClock {
+    public static final String MOD_ID = "gameclock";
     public static final Logger LOGGER = LoggerFactory.getLogger("GameClock");
 
-    @Override
-    public void onInitializeClient() {
+
+    public static void init() {
         HANDLER.load();
-        HudRenderCallback.EVENT.register((graphics, tickDelta) -> {
+        ClientGuiEvent.RENDER_HUD.register((graphics, tickDelta) -> {
             Minecraft minecraft = Minecraft.getInstance();
             if (minecraft.getDebugOverlay().showDebugScreen() || minecraft.options.hideGui)
                 return;
