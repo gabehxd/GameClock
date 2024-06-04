@@ -24,10 +24,15 @@ public class GameClockClient implements ClientModInitializer {
 
             Font font = minecraft.font;
             Config cfg = HANDLER.instance();
-            String time = cfg.getTime();
-            Point point = cfg.getPosition(graphics, time, font);
-
-            graphics.drawString(font, time, point.x, point.y, cfg.getHexColor(), cfg.shadowText);
+            String time = cfg.formatTime();
+            if (!cfg.enableTextBackground) {
+                Point point = cfg.calculatePosition(graphics, time, font);
+                graphics.drawString(font, time, point.x, point.y, Utils.getHexColor(cfg.textColor), cfg.shadowText);
+            } else {
+                Config.PointCollection collection = cfg.calculatePositions(graphics, time, font);
+                graphics.fill(collection.start().x - 1, collection.start().y - 1, collection.end().x + 1, collection.end().y - 1, Utils.getHexColor(cfg.backgroundColor));
+                graphics.drawString(font, time, collection.start().x, collection.start().y, Utils.getHexColor(cfg.textColor), cfg.shadowText);
+            }
         });
         LOGGER.info("Initialized");
     }

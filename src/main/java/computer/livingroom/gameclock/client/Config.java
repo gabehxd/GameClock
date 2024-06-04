@@ -7,6 +7,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
+
 import java.awt.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -24,33 +25,53 @@ public class Config {
     public Position guiPosition = Position.BOTTOM_LEFT;
     @SerialEntry
     public Boolean shadowText = true;
-    @SerialEntry
-    public Color hexColor = new Color(0xFFFFFFFF, true);
+    @SerialEntry(value = "hexColor", comment = "I done fucked up naming it hexcolor in v1 (this is text color)")
+    public Color textColor = new Color(0xFFFFFFFF, true);
     @SerialEntry
     public int xPadding = 5;
     @SerialEntry
     public int yPadding = 5;
     @SerialEntry
     public boolean is24Hour = false;
+    @SerialEntry
+    public boolean enableTextBackground = false;
+    @SerialEntry
+    public Color backgroundColor = new Color(0x90505050, true);
 
-    public int getHexColor() {
-        //What the fuck java
-        return (hexColor.getAlpha() << 24) | (hexColor.getRed() << 16) | (hexColor.getGreen() << 8) | hexColor.getBlue();
-    }
-
-    public String getTime() {
+    public String formatTime() {
         return !this.is24Hour ? LocalDateTime.now().format(DateTimeFormatter.ofPattern("hh:mm a")) : LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
     }
 
-    public Point getPosition(GuiGraphics ctx, String str, Font font) {
+    public Point calculatePosition(GuiGraphics ctx, String str, Font font) {
+        int textWidth = font.width(str);
         return switch (this.guiPosition) {
             case TOP_LEFT -> new Point(0 + this.xPadding, 0 + this.yPadding);
-            case BOTTOM_LEFT ->
-                    new Point(0 + this.xPadding, ctx.guiHeight() - font.lineHeight - this.yPadding);
-            case TOP_RIGHT ->
-                    new Point(ctx.guiWidth() - font.width(str) - this.xPadding, 0 + this.yPadding);
+            case BOTTOM_LEFT -> new Point(0 + this.xPadding, ctx.guiHeight() - font.lineHeight - this.yPadding);
+            case TOP_RIGHT -> new Point(ctx.guiWidth() - textWidth - this.xPadding, 0 + this.yPadding);
             case BOTTOM_RIGHT ->
-                    new Point(ctx.guiWidth() - font.width(str) - this.xPadding, ctx.guiHeight() - font.lineHeight - this.yPadding);
+                    new Point(ctx.guiWidth() - textWidth - this.xPadding, ctx.guiHeight() - font.lineHeight - this.yPadding);
+        };
+    }
+
+    public PointCollection calculatePositions(GuiGraphics ctx, String str, Font font) {
+        int textWidth = font.width(str);
+        return switch (this.guiPosition) {
+            case TOP_LEFT -> new PointCollection(
+                    new Point(0 + this.xPadding, 0 + this.yPadding),
+                    new Point(0 + this.xPadding + textWidth, 0 + this.yPadding + font.lineHeight)
+            );
+            case BOTTOM_LEFT -> new PointCollection(
+                    new Point(0 + this.xPadding, ctx.guiHeight() - font.lineHeight - this.yPadding),
+                    new Point(0 + this.xPadding + textWidth, ctx.guiHeight() - this.yPadding)
+            );
+            case TOP_RIGHT -> new PointCollection(
+                    new Point(ctx.guiWidth() - textWidth - this.xPadding, 0 + this.yPadding),
+                    new Point(ctx.guiWidth() - this.xPadding, 0 + this.yPadding + font.lineHeight)
+            );
+            case BOTTOM_RIGHT -> new PointCollection(
+                    new Point(ctx.guiWidth() - textWidth - this.xPadding, ctx.guiHeight() - font.lineHeight - this.yPadding),
+                    new Point(ctx.guiWidth() - this.xPadding, ctx.guiHeight() - this.yPadding)
+            );
         };
     }
 
@@ -59,5 +80,8 @@ public class Config {
         BOTTOM_RIGHT,
         TOP_LEFT,
         BOTTOM_LEFT
+    }
+
+    public record PointCollection(Point start, Point end) {
     }
 }
