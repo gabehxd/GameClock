@@ -9,8 +9,8 @@
     "repo": "https://github.com/gabehxd/GameClock"
   },
   "license": "MIT",
-  "icon": "assets/gameclock/icon.png",
-  "environment": "*",
+  "icon": "assets/gameclock/icon.jpg",
+  "environment": "client",
   "entrypoints": {
     "client": [
       "computer.livingroom.gameclock.client.GameClockClient"
