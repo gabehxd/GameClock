@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
 
 public class Config {
     public static ConfigClassHandler<Config> HANDLER = ConfigClassHandler.createBuilder(Config.class)
-            .id(new ResourceLocation("gameclock", "config"))
+            .id(ResourceLocation.tryBuild("gameclock", "config"))
             .serializer(config -> GsonConfigSerializerBuilder.create(config)
                     .setPath(FabricLoader.getInstance().getConfigDir().resolve("gameclock.json5"))
                     .setJson5(true)
