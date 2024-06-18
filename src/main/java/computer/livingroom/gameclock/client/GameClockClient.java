@@ -19,7 +19,7 @@ public class GameClockClient implements ClientModInitializer {
         HANDLER.load();
         HudRenderCallback.EVENT.register((graphics, tickDelta) -> {
             Minecraft minecraft = Minecraft.getInstance();
-            if (minecraft.getDebugOverlay().showDebugScreen() || minecraft.options.hideGui)
+            if (minecraft.options.renderDebug || minecraft.options.hideGui)
                 return;
 
             Font font = minecraft.font;
