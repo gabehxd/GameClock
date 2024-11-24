@@ -121,7 +121,7 @@ public class ModMenuConfigScreen implements ModMenuApi {
                                                     bool -> HANDLER.instance().enableTextBackground = bool
                                             )
                                             .controller(BooleanControllerBuilder::create)
-                                            .listener((opt, pending) -> bgColor.setAvailable(pending))
+                                            .addListener((option, event) -> bgColor.setAvailable(option.pendingValue()))
                                             .build())
                                     .option(bgColor)
                                     .build())
