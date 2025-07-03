@@ -1,9 +1,10 @@
 package computer.livingroom.gameclock.client;
 
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.resources.ResourceLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +18,7 @@ public class GameClockClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         HANDLER.load();
-        HudRenderCallback.EVENT.register((graphics, tickDelta) -> {
+        HudElementRegistry.addFirst(ResourceLocation.fromNamespaceAndPath("gameclock", "hud"), (graphics, tickCounter) -> {
             Minecraft minecraft = Minecraft.getInstance();
             if (minecraft.getDebugOverlay().showDebugScreen() || minecraft.options.hideGui)
                 return;
