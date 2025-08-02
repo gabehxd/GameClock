@@ -25,7 +25,7 @@ public class Config {
     public Position guiPosition = Position.BOTTOM_LEFT;
     @SerialEntry
     public Boolean shadowText = true;
-    @SerialEntry(value = "hexColor", comment = "I done fucked up naming it hexcolor in v1 (this is text color)")
+    @SerialEntry(value = "hexColor", comment = "I messed up naming it hexcolor in v1 (this is text color)")
     public Color textColor = new Color(0xFFFFFFFF, true);
     @SerialEntry
     public int xPadding = 5;

@@ -3,7 +3,7 @@
   "id": "gameclock",
   "version": "${version}",
   "name": "GameClock",
-  "description": "No bullshit & no mess. Just write a fucking timestamp to the HUD.",
+  "description": "No mess. Just write a timestamp to the HUD.",
   "authors": ["gabeh"],
   "contact": {
     "repo": "https://github.com/gabehxd/GameClock"
