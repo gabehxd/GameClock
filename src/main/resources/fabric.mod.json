@@ -6,7 +6,7 @@
   "description": "No mess. Just write a timestamp to the HUD.",
   "authors": ["gabeh"],
   "contact": {
-    "repo": "https://github.com/gabehxd/GameClock"
+    "sources": "https://github.com/gabehxd/GameClock"
   },
   "license": "MIT",
   "icon": "assets/gameclock/icon.png",
@@ -16,16 +16,16 @@
       "computer.livingroom.gameclock.client.GameClockClient"
     ],
     "modmenu" : [
-      "computer.livingroom.gameclock.client.ModMenuConfigScreen"
+      "computer.livingroom.gameclock.client.modmenu.ModMenuConfigScreen"
     ]
   },
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric": ">=${fabric_version}",
-    "minecraft": ">=${minecraft_version}",
-    "yet_another_config_lib_v3": ">=${yacl_version}"
+    "minecraft": ">=${minecraft_version}"
   },
   "recommends": {
-    "modmenu": "*"
+    "yet_another_config_lib_v3": ">=${yacl_version}",
+    "modmenu": ">=${modmenu_version}"
   }
 }

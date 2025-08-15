@@ -31,7 +31,7 @@ dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings loom.layered() {
         officialMojangMappings()
-        parchment("org.parchmentmc.data:parchment-1.21.5:2025.06.15@zip")
+        parchment("org.parchmentmc.data:parchment-1.21.6:2025.06.29@zip")
     }
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
@@ -47,6 +47,7 @@ processResources {
     inputs.property "loader_version", project.loader_version
     inputs.property "fabric_version", project.fabric_version
     inputs.property "yacl_version", project.yacl_version
+    inputs.property "modmenu_version", project.modmenu_version
     filteringCharset "UTF-8"
 
     filesMatching("fabric.mod.json") {
@@ -54,7 +55,8 @@ processResources {
                 "minecraft_version": project.minecraft_version,
                 "loader_version": project.loader_version,
                 "fabric_version": project.fabric_version,
-                "yacl_version": project.yacl_version
+                "yacl_version": project.yacl_version,
+                "modmenu_version": project.modmenu_version
     }
 }
 
