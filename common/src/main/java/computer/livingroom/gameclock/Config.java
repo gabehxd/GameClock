@@ -1,9 +1,9 @@
-package computer.livingroom.gameclock.client;
+package computer.livingroom.gameclock;
 
 import dev.isxander.yacl3.config.v2.api.ConfigClassHandler;
 import dev.isxander.yacl3.config.v2.api.SerialEntry;
 import dev.isxander.yacl3.config.v2.api.serializer.GsonConfigSerializerBuilder;
-import net.fabricmc.loader.api.FabricLoader;
+import dev.isxander.yacl3.platform.YACLPlatform;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
@@ -16,7 +16,7 @@ public class Config {
     public static ConfigClassHandler<Config> HANDLER = ConfigClassHandler.createBuilder(Config.class)
             .id(ResourceLocation.tryBuild("gameclock", "config"))
             .serializer(config -> GsonConfigSerializerBuilder.create(config)
-                    .setPath(FabricLoader.getInstance().getConfigDir().resolve("gameclock.json5"))
+                    .setPath(YACLPlatform.getConfigDir().resolve("gameclock.json5"))
                     .setJson5(true)
                     .build())
             .build();

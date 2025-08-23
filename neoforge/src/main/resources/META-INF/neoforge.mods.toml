@@ -1,0 +1,43 @@
+modLoader = "javafml"
+loaderVersion = "[2,)"
+issueTrackerURL = "https://github.com/gabehxd/GameClock/issues"
+license = "MIT"
+
+[[mods]]
+modId = "gameclock"
+version = "${version}"
+displayName = "GameClock"
+authors = "gabeh"
+description ="Add time to the HUD pls"
+updateJSONURL = "https://api.modrinth.com/updates/gameclock/forge_updates.json?neoforge=only"
+displayURL = "https://modrinth.com/mod/GameClock"
+logoFile = "assets/icon.png"
+
+[[dependencies.gameclock]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21,)"
+ordering = "NONE"
+side = "CLIENT"
+
+[[dependencies.gameclock]]
+modId = "minecraft"
+type = "required"
+versionRange = "[${minecraft_version},)"
+ordering = "NONE"
+side = "CLIENT"
+
+[[dependencies.gameclock]]
+modId = "architectury"
+type = "required"
+versionRange = "[${architectury_api_version},)"
+ordering = "AFTER"
+side = "CLIENT"
+
+[[dependencies.gameclock]]
+modId = "yet_another_config_lib_v3"
+type = "required"
+versionRange = "[${yacl_version}-neoforge,)"
+ordering = "NONE"
+side = "CLIENT"
+
