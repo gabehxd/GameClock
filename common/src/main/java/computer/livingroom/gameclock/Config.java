@@ -37,9 +37,16 @@ public class Config {
     public boolean enableTextBackground = false;
     @SerialEntry
     public Color backgroundColor = new Color(0x90505050, true);
+    @SerialEntry
+    public boolean showSeconds = false;
 
     public String formatTime() {
-        return !this.is24Hour ? LocalDateTime.now().format(DateTimeFormatter.ofPattern("hh:mm a")) : LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
+        if (!this.is24Hour) {
+            return !this.showSeconds ? LocalDateTime.now().format(DateTimeFormatter.ofPattern("hh:mm a")) : LocalDateTime.now().format(DateTimeFormatter.ofPattern("hh:mm:ss a"));
+        }
+        else {
+            return !this.showSeconds ? LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm")) : LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+        }
     }
 
     public Point calculatePosition(GuiGraphics ctx, String str, Font font) {

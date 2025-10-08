@@ -10,6 +10,8 @@ import net.minecraft.network.chat.Component;
 
 import java.awt.*;
 
+import static net.minecraft.network.chat.Component.*;
+
 public class Utils {
     public static int getHexColor(Color color) {
         //What the flip java
@@ -18,8 +20,8 @@ public class Utils {
 
     public static Screen makeConfigScreen(Screen parent) {
         Option<Color> bgColor = Option.<Color>createBuilder()
-                .name(Component.literal("Background Color"))
-                .description(OptionDescription.of(Component.literal("Color of the background drawn on screen.")))
+                .name(literal("Background Color"))
+                .description(OptionDescription.of(literal("Color of the background drawn on screen.")))
                 .binding(
                         new Color(0x90505050),
                         () -> Config.HANDLER.instance().backgroundColor,
@@ -30,14 +32,14 @@ public class Utils {
                 .build();
 
         return YetAnotherConfigLib.createBuilder()
-                .title(net.minecraft.network.chat.Component.literal("Game Clock"))
+                .title(literal("Game Clock"))
                 .category(ConfigCategory.createBuilder()
-                        .name(net.minecraft.network.chat.Component.literal("Game Clock"))
+                        .name(literal("Game Clock"))
                         .group(OptionGroup.createBuilder()
-                                .name(net.minecraft.network.chat.Component.literal("UI Options"))
+                                .name(literal("UI Options"))
                                 .option(Option.<Config.Position>createBuilder()
-                                        .name(net.minecraft.network.chat.Component.literal("UI Positioning"))
-                                        .description(OptionDescription.of(net.minecraft.network.chat.Component.literal("Position where the time will be drawn")))
+                                        .name(literal("UI Positioning"))
+                                        .description(OptionDescription.of(literal("Position where the time will be drawn")))
                                         .binding(
                                                 Config.Position.BOTTOM_LEFT,
                                                 () -> Config.HANDLER.instance().guiPosition,
@@ -45,11 +47,11 @@ public class Utils {
                                         )
                                         .controller(positionOption -> EnumControllerBuilder.create(positionOption)
                                                 .enumClass(Config.Position.class)
-                                                .formatValue(v -> net.minecraft.network.chat.Component.literal(v.name().charAt(0) + v.name().substring(1).toLowerCase().replace('_', ' '))))
+                                                .formatValue(v -> literal(v.name().charAt(0) + v.name().substring(1).toLowerCase().replace('_', ' '))))
                                         .build())
                                 .option(Option.<Integer>createBuilder()
-                                        .name(net.minecraft.network.chat.Component.literal("X Padding"))
-                                        .description(OptionDescription.of(net.minecraft.network.chat.Component.literal("Add some pixel space in between the edge of the screen and the text.")))
+                                        .name(literal("X Padding"))
+                                        .description(OptionDescription.of(literal("Add some pixel space in between the edge of the screen and the text.")))
                                         .binding(
                                                 5,
                                                 () -> Config.HANDLER.instance().xPadding,
@@ -58,11 +60,11 @@ public class Utils {
                                         .controller(integerOption -> IntegerSliderControllerBuilder.create(integerOption)
                                                 .range(0, 25)
                                                 .step(1)
-                                                .formatValue(value -> net.minecraft.network.chat.Component.literal(value + " px")))
+                                                .formatValue(value -> literal(value + " px")))
                                         .build())
                                 .option(Option.<Integer>createBuilder()
-                                        .name(net.minecraft.network.chat.Component.literal("Y Padding"))
-                                        .description(OptionDescription.of(net.minecraft.network.chat.Component.literal("Add some pixel space in between the edge of the screen and the text.")))
+                                        .name(literal("Y Padding"))
+                                        .description(OptionDescription.of(literal("Add some pixel space in between the edge of the screen and the text.")))
                                         .binding(
                                                 5,
                                                 () -> Config.HANDLER.instance().yPadding,
@@ -71,14 +73,14 @@ public class Utils {
                                         .controller(integerOption -> IntegerSliderControllerBuilder.create(integerOption)
                                                 .range(0, 25)
                                                 .step(1)
-                                                .formatValue(value -> net.minecraft.network.chat.Component.literal(value + " px")))
+                                                .formatValue(value -> literal(value + " px")))
                                         .build())
                                 .build())
                         .group(OptionGroup.createBuilder()
-                                .name(net.minecraft.network.chat.Component.literal("Text Options"))
+                                .name(literal("Text Options"))
                                 .option(Option.<Color>createBuilder()
-                                        .name(net.minecraft.network.chat.Component.literal("Text Color"))
-                                        .description(OptionDescription.of(net.minecraft.network.chat.Component.literal("Color of the text drawn on screen.")))
+                                        .name(literal("Text Color"))
+                                        .description(OptionDescription.of(literal("Color of the text drawn on screen.")))
                                         .binding(
                                                 new Color(0xFFFFFF),
                                                 () -> Config.HANDLER.instance().textColor,
@@ -88,8 +90,8 @@ public class Utils {
                                                 .allowAlpha(true))
                                         .build())
                                 .option(Option.<Boolean>createBuilder()
-                                        .name(net.minecraft.network.chat.Component.literal("Text Shadow"))
-                                        .description(OptionDescription.of(net.minecraft.network.chat.Component.literal("Add a slight shadow to the text.")))
+                                        .name(literal("Text Shadow"))
+                                        .description(OptionDescription.of(literal("Add a slight shadow to the text.")))
                                         .binding(
                                                 true,
                                                 () -> Config.HANDLER.instance().shadowText,
@@ -99,8 +101,19 @@ public class Utils {
                                                 .coloured(true))
                                         .build())
                                 .option(Option.<Boolean>createBuilder()
-                                        .name(net.minecraft.network.chat.Component.literal("24-Hour Clock"))
-                                        .description(OptionDescription.of(net.minecraft.network.chat.Component.literal("Toggle between using a 24-hour or a 12-hour clock")))
+                                        .name(Component.literal("Show Seconds"))
+                                        .description(OptionDescription.of(Component.literal("Toggle between using a 24-hour or a 12-hour clock")))
+                                        .binding(
+                                                false,
+                                                () -> Config.HANDLER.instance().showSeconds,
+                                                bool -> Config.HANDLER.instance().showSeconds = bool
+                                        )
+                                        .controller(BooleanControllerBuilder::create)
+                                        .build()
+                                )
+                                .option(Option.<Boolean>createBuilder()
+                                        .name(literal("24-Hour Clock"))
+                                        .description(OptionDescription.of(literal("Toggle between using a 24-hour or a 12-hour clock")))
                                         .binding(
                                                 false,
                                                 () -> Config.HANDLER.instance().is24Hour,
@@ -110,10 +123,10 @@ public class Utils {
                                         .build())
                                 .build())
                         .group(OptionGroup.createBuilder()
-                                .name(net.minecraft.network.chat.Component.literal("Background Options"))
+                                .name(literal("Background Options"))
                                 .option(Option.<Boolean>createBuilder()
-                                        .name(net.minecraft.network.chat.Component.literal("Text Background"))
-                                        .description(OptionDescription.of(Component.literal("Add a background to the clock")))
+                                        .name(literal("Text Background"))
+                                        .description(OptionDescription.of(literal("Add a background to the clock")))
                                         .binding(
                                                 false,
                                                 () -> Config.HANDLER.instance().enableTextBackground,
