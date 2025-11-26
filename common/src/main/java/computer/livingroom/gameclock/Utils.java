@@ -32,14 +32,14 @@ public class Utils {
                 .build();
 
         return YetAnotherConfigLib.createBuilder()
-                .title(literal("Game Clock"))
+                .title(literal("GameClock"))
                 .category(ConfigCategory.createBuilder()
-                        .name(literal("Game Clock"))
+                        .name(literal("GameClock"))
                         .group(OptionGroup.createBuilder()
                                 .name(literal("UI Options"))
                                 .option(Option.<Config.Position>createBuilder()
                                         .name(literal("UI Positioning"))
-                                        .description(OptionDescription.of(literal("Position where the time will be drawn")))
+                                        .description(OptionDescription.of(literal("Position where the time will be drawn.")))
                                         .binding(
                                                 Config.Position.BOTTOM_LEFT,
                                                 () -> Config.HANDLER.instance().guiPosition,
@@ -102,7 +102,7 @@ public class Utils {
                                         .build())
                                 .option(Option.<Boolean>createBuilder()
                                         .name(Component.literal("Show Seconds"))
-                                        .description(OptionDescription.of(Component.literal("Toggle between using a 24-hour or a 12-hour clock")))
+                                        .description(OptionDescription.of(Component.literal("Show seconds of the second-of-minute.")))
                                         .binding(
                                                 false,
                                                 () -> Config.HANDLER.instance().showSeconds,
@@ -113,7 +113,7 @@ public class Utils {
                                 )
                                 .option(Option.<Boolean>createBuilder()
                                         .name(literal("24-Hour Clock"))
-                                        .description(OptionDescription.of(literal("Toggle between using a 24-hour or a 12-hour clock")))
+                                        .description(OptionDescription.of(literal("Toggle between using a 24-hour or a 12-hour clock.")))
                                         .binding(
                                                 false,
                                                 () -> Config.HANDLER.instance().is24Hour,
@@ -126,7 +126,7 @@ public class Utils {
                                 .name(literal("Background Options"))
                                 .option(Option.<Boolean>createBuilder()
                                         .name(literal("Text Background"))
-                                        .description(OptionDescription.of(literal("Add a background to the clock")))
+                                        .description(OptionDescription.of(literal("Add a background to the clock.")))
                                         .binding(
                                                 false,
                                                 () -> Config.HANDLER.instance().enableTextBackground,
