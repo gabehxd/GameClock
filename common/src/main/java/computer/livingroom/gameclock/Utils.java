@@ -10,7 +10,7 @@ import net.minecraft.network.chat.Component;
 
 import java.awt.*;
 
-import static net.minecraft.network.chat.Component.*;
+import static net.minecraft.network.chat.Component.literal;
 
 public class Utils {
     public static int getHexColor(Color color) {
@@ -97,16 +97,35 @@ public class Utils {
                                                 () -> Config.HANDLER.instance().shadowText,
                                                 shadow -> Config.HANDLER.instance().shadowText = shadow
                                         )
-                                        .controller(opt -> BooleanControllerBuilder.create(opt)
-                                                .coloured(true))
-                                        .build())
+                                        .controller(BooleanControllerBuilder::create)
+                                        .build()
+                                )
+                                .option(Option.<Boolean>createBuilder()
+                                        .name(Component.literal("Leading 0"))
+                                        .description(OptionDescription.of(Component.literal("Show a leading 0 on the clock.")))
+                                        .binding(
+                                                false,
+                                                () -> Config.HANDLER.instance().leadZero,
+                                                bool -> {
+                                                    Config cfg = Config.HANDLER.instance();
+                                                    cfg.leadZero = bool;
+                                                    cfg.buildFormat();
+                                                }
+                                        )
+                                        .controller(BooleanControllerBuilder::create)
+                                        .build()
+                                )
                                 .option(Option.<Boolean>createBuilder()
                                         .name(Component.literal("Show Seconds"))
-                                        .description(OptionDescription.of(Component.literal("Show seconds of the second-of-minute.")))
+                                        .description(OptionDescription.of(Component.literal("Show the second-of-minute.")))
                                         .binding(
                                                 false,
                                                 () -> Config.HANDLER.instance().showSeconds,
-                                                bool -> Config.HANDLER.instance().showSeconds = bool
+                                                bool -> {
+                                                    Config cfg = Config.HANDLER.instance();
+                                                    cfg.showSeconds = bool;
+                                                    cfg.buildFormat();
+                                                }
                                         )
                                         .controller(BooleanControllerBuilder::create)
                                         .build()
@@ -117,7 +136,11 @@ public class Utils {
                                         .binding(
                                                 false,
                                                 () -> Config.HANDLER.instance().is24Hour,
-                                                bool -> Config.HANDLER.instance().is24Hour = bool
+                                                bool -> {
+                                                    Config cfg = Config.HANDLER.instance();
+                                                    cfg.is24Hour = bool;
+                                                    cfg.buildFormat();
+                                                }
                                         )
                                         .controller(BooleanControllerBuilder::create)
                                         .build())

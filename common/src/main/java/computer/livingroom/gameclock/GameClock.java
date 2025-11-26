@@ -11,6 +11,8 @@ public final class GameClock {
 
     public static void init() {
         Config.HANDLER.load();
+        Config cfg = Config.HANDLER.instance();
+        cfg.buildFormat();
 
         ClientGuiEvent.RENDER_HUD.register((graphics, deltaTracker) -> {
             Minecraft minecraft = Minecraft.getInstance();
@@ -18,8 +20,7 @@ public final class GameClock {
                 return;
 
             Font font = minecraft.font;
-            Config cfg = Config.HANDLER.instance();
-            String time = cfg.formatTime();
+            String time = cfg.getTime();
             if (!cfg.enableTextBackground) {
                 Point point = cfg.calculatePosition(graphics, time, font);
                 graphics.drawString(font, time, point.x, point.y, Utils.getHexColor(cfg.textColor), cfg.shadowText);

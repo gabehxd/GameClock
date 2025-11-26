@@ -39,22 +39,35 @@ public class Config {
     public Color backgroundColor = new Color(0x90505050, true);
     @SerialEntry
     public boolean showSeconds = false;
+    @SerialEntry
+    boolean leadZero = false;
 
-    public String formatTime() {
-        if (!this.is24Hour) {
-            return !this.showSeconds ? LocalDateTime.now().format(DateTimeFormatter.ofPattern("hh:mm a")) : LocalDateTime.now().format(DateTimeFormatter.ofPattern("hh:mm:ss a"));
+    private String builtFormat;
+
+    public void buildFormat() {
+        StringBuilder formatBuilder = new StringBuilder();
+        formatBuilder.append(leadZero ? is24Hour ? "HH" : "hh" : is24Hour ? "H" : "h").append(":mm");
+
+        if (showSeconds) {
+            formatBuilder.append(":ss");
         }
-        else {
-            return !this.showSeconds ? LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm")) : LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+        if (!is24Hour) {
+            formatBuilder.append(" a");
         }
+
+        builtFormat = formatBuilder.toString();
+    }
+
+    public String getTime() {
+        return LocalDateTime.now().format(DateTimeFormatter.ofPattern(builtFormat));
     }
 
     public Point calculatePosition(GuiGraphics ctx, String str, Font font) {
         int textWidth = font.width(str);
         return switch (this.guiPosition) {
-            case TOP_LEFT -> new Point(0 + this.xPadding, 0 + this.yPadding);
-            case BOTTOM_LEFT -> new Point(0 + this.xPadding, ctx.guiHeight() - font.lineHeight - this.yPadding);
-            case TOP_RIGHT -> new Point(ctx.guiWidth() - textWidth - this.xPadding, 0 + this.yPadding);
+            case TOP_LEFT -> new Point(this.xPadding, this.yPadding);
+            case BOTTOM_LEFT -> new Point(this.xPadding, ctx.guiHeight() - font.lineHeight - this.yPadding);
+            case TOP_RIGHT -> new Point(ctx.guiWidth() - textWidth - this.xPadding, this.yPadding);
             case BOTTOM_RIGHT ->
                     new Point(ctx.guiWidth() - textWidth - this.xPadding, ctx.guiHeight() - font.lineHeight - this.yPadding);
         };
@@ -64,16 +77,16 @@ public class Config {
         int textWidth = font.width(str);
         return switch (this.guiPosition) {
             case TOP_LEFT -> new PointCollection(
-                    new Point(0 + this.xPadding, 0 + this.yPadding),
-                    new Point(0 + this.xPadding + textWidth, 0 + this.yPadding + font.lineHeight)
+                    new Point(this.xPadding, this.yPadding),
+                    new Point(this.xPadding + textWidth, this.yPadding + font.lineHeight)
             );
             case BOTTOM_LEFT -> new PointCollection(
-                    new Point(0 + this.xPadding, ctx.guiHeight() - font.lineHeight - this.yPadding),
-                    new Point(0 + this.xPadding + textWidth, ctx.guiHeight() - this.yPadding)
+                    new Point(this.xPadding, ctx.guiHeight() - font.lineHeight - this.yPadding),
+                    new Point(this.xPadding + textWidth, ctx.guiHeight() - this.yPadding)
             );
             case TOP_RIGHT -> new PointCollection(
-                    new Point(ctx.guiWidth() - textWidth - this.xPadding, 0 + this.yPadding),
-                    new Point(ctx.guiWidth() - this.xPadding, 0 + this.yPadding + font.lineHeight)
+                    new Point(ctx.guiWidth() - textWidth - this.xPadding, this.yPadding),
+                    new Point(ctx.guiWidth() - this.xPadding, this.yPadding + font.lineHeight)
             );
             case BOTTOM_RIGHT -> new PointCollection(
                     new Point(ctx.guiWidth() - textWidth - this.xPadding, ctx.guiHeight() - font.lineHeight - this.yPadding),
